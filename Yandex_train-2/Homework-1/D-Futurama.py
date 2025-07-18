@@ -33,22 +33,24 @@ for idx in range(swaps_cnt):
 # print(heroes, " Начальный обмен произошел ")
 # print("Решение:")
 
-while not_swaped:
-    for i in swaped:
-        for j in not_swaped:
-            swap([i,j])
-            print(i+1, j+1) # вывод для решения (обратно правим индексацию)
-            swaped.append(j)
-            not_swaped.remove(j)
-            # print(heroes)
-
 while heroes != res:
+    while not_swaped:
+        swaped.sort()
+        for i in swaped:
+            for j in not_swaped:
+                swap([i,j])
+                print(i+1, j+1) # вывод для решения (обратно правим индексацию)
+                swaped.append(j)
+                not_swaped.remove(j)
+                print(heroes)
+
     for cur_body in range(heroes_cnt):
         if cur_body != heroes[cur_body]:
             right_body = heroes.index(cur_body)
             if [cur_body, right_body] not in swaped_bodies and [right_body, cur_body] not in swaped_bodies  :
                 swap([cur_body, right_body])
+                not_swaped.append(cur_body)
                 print(cur_body+1, right_body+1) # вывод для решения (обратно правим индексацию)
-                # print(heroes)
+                print(heroes)
 
-# print("Все на местах")
+print("Все на местах")
