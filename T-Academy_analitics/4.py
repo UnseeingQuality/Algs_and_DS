@@ -1,35 +1,22 @@
 N = int(input())
 S = str(input())
-A = [0]
+A = [-1 for i in range(N+1)]
+idxs = [-1 for i in range(N+1)] # индекс - число в массиве, значение - его индекс в массиве
 
-prev_id = 0
-for i in range(1,N+1):
-    operation = S[i-1]
-    if operation == "R":
-        paste_id = prev_id + 1
-        if paste_id > len(A):
-            A.append(i)
-        else:
-            A.append(-1)
-            for j in range(len(A)-1, paste_id+1, -1):
-                A[j] = A[j-1]
-                A[j-1] = -1
-            A[paste_id+1] = i
+idxs[0] = 0
+for i in range(N):
+    opr = S[i]
+    num = i+1
+    if opr == "L":
+        idxs[num] = idxs[num-1]
+        for j in range(num):
+            idxs[j] += 1
+    if opr == "R":
+        idxs[num] = idxs[num-1]
+        for j in range(num):
+            idxs[j] -= 1
 
-    elif operation == "L":
-        paste_id = prev_id - 1
-        if paste_id < 0:
-            A.append(-1)
-            for j in range(len(A)-1, paste_id+1, -1):
-                A[j] = A[j-1]
-                A[j-1] = -1
-            A[0] = i
-        else:
-            A.append(-1)
-            for j in range(len(A)-1, paste_id+1, -1):
-                A[j] = A[j - 1]
-                A[j - 1] = -1
-            A[paste_id] = i
-    prev_id = paste_id
+for i in range(N+1):
+    A[idxs[i]] = i
 
-print(A)
+print(*A)
